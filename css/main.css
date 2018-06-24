@@ -1,0 +1,52 @@
+#left {
+  position: absolute;
+  width: 220px;
+  height: 100%;
+  background: #8ac0ff;
+}
+
+#logo {
+  width: 220px;
+  padding: 10px;
+}
+
+#left .panel-heading:hover {
+  cursor: pointer;
+}
+
+#left li:hover {
+  cursor: pointer;
+}
+
+#right {
+  padding-left: 220px;
+  min-width: 100%;
+  min-height: 600px;
+  border-bottom: 1px solid #ccc;
+}
+
+.addBtn {
+  height: 86px;
+  border-bottom: 1px solid #ccc;
+}
+.bthAdd{
+  margin: 26px 10%;
+}
+#right table th, td {
+  text-align: center;
+  vertical-align: middle;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+#right table{
+  table-layout:fixed;
+}
+
+#right .btn-yellow{
+    background: #fff;
+    margin-right: 10px;
+    color: #eab67c;
+    border: 1px solid #eab67c;
+}

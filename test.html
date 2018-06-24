@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+<button>botton</button>
+<ul id="on">
+	<li>don't ask, please listen to me! </li>
+	<li>don't ask, please listen to me! </li>
+	<li>don't ask, please listen to me! </li>
+
+
+</ul>
+
+<script src="js/ajax.js"></script>
+<script>
+var oBtn = document.getElementsByTagName('button');
+var oLi = document.getElementById('on');
+
+oBtn[0].onclick = function(){
+	ajax('main.php?n='+Math.random(),function(data){
+		console.log('未处理的',typeof(data),data);
+		d = eval(data);//eval能将字符串中的代码转化为JS代码.
+		console.log(typeof(d),d);//data: 指ajax从服务器带回的数据
+		oLi.innerHTML = d;
+	});
+}
+
+</script>
+</body>
+</html>

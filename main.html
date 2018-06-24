@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>首页</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/main.css">
+  <script src="js/jquery-3.3.1.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/ajax1.js"></script>
+  <script src="js/vue.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+  window.onload=function(){
+    new Vue({
+      el:"#userTable",
+      data:{
+        teachers:[
+           {name:'yyqx',jobTitle:'偶像',introduction:'ashfahs gjkahgjkhasjkl',phone:'12345678901',admin:true},
+           {name:'易烊千玺',jobTitle:'偶像',phone:'12345678901',admin:false},
+           {},
+           {},
+           {},
+        ]
+      },
+      methods:{
+        check:function(){
+        },
+      },
+    });
+  }
+  </script>
+</head>
+
+<body>
+  <!--左侧菜单栏-->
+  <div id="left">
+    <!-- logo -->
+    <div id="logo">
+      <img src="images/logo.png">
+    </div>
+    <!-- 用户信息 -->
+    <div class="panel panel-default center-block">
+      <div class="panel-heading" data-toggle="collapse" data-target="#user">
+        <strong>
+          个人信息 <span class="caret"></span></span>
+        </strong>
+      </div>
+      <div id="user" class="panel-collapse collapse">
+        <div class="panel-body">
+          <p class="row">
+            <strong class="col-xs-4">姓名</strong>
+            <span class="col-xs-8">易烊千玺</span>
+          </p>
+          <p class="row">
+            <strong class="col-xs-4">职称</strong>
+            <span class="col-xs-8">偶像</span>
+          </p>
+          <p class="row">
+            <strong class="col-xs-4">简介</strong>
+            <span class="col-xs-8">始于颜值，陷于才华，忠于人品,美貌与智慧并存</span>
+          </p>
+          <p class="row">
+            <strong class="col-xs-4">手机</strong>
+            <span class="col-xs-8">12345678910</span>
+          </p>
+          <button type="button" class="bth btn-default btn-xs col-xs-10 col-xs-offset-1">
+          修改
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- 功能菜单 -->
+    <ul class="list-group" role="menu">
+      <li class="list-group-item active" href="#teachers" aria-controls="teachers" role="tab" data-toggle="tab">
+        教师信息
+      </li>
+      <li class="list-group-item" href="#invigilate" aria-controls="invigilate" role="tab" data-toggle="tab">
+        监考信息
+      </li>
+      <li class="list-group-item" href="#remind" aria-controls="remind" role="tab" data-toggle="tab">
+        监考提醒
+        <span class="badge">
+          2
+        </span>
+      </li>
+      <li class="list-group-item" href="#task" aria-controls="task" role="tab" data-toggle="tab">
+        任务
+        <span class="badge">
+          1
+        </span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- 右侧内容 -->
+  <div id="right" class="pull-left tab-content">
+    <!-- 教师信息 -->
+    <div role="tabpanel" class="tab-pane active" id="teachers">
+      <div class="head addBtn">
+        <!-- 管理员显示 ->去掉hidden-->
+        <button type="button" class=" btn btn-primary bthAdd" data-toggle="modal" data-target="#addSource">
+          添加用户
+        </button>
+      </div>
+      <table  id="userTable" class="table table-striped">
+        <thead>
+          <tr>
+            <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2 ">
+              姓名
+            </th>
+            <th class="col-lg-3 col-md-3 col-sm-3 col-xs-3 ">
+              职称
+            </th>
+            <th class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+              简介
+            </th>
+            <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+              手机
+            </th>
+            <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+              操作
+            </th>
+          </tr>
+        </thead>
+        <tbody v-for="item in teachers">
+          <tr>
+            <td>{{item.name}}</td>
+            <td>{{item.jobTitle}}</td>
+            <td>{{item.introduction}}</td>
+            <td>{{item.phone}}</td>
+            <td>
+              <button id="checkUser" v-on:click="checkUser" type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#checkSource">查看</button>
+              <!-- show 显示 /hidden 隐藏 -->
+              <div class="btn-group" v-if="item.admin">
+                <button type="button" class="btn btn-warning btn-xs " data-toggle="modal" data-target="#changeSource">修改</button>
+                <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#deleteSource">删除</button>
+                <!--样式： btn-default 添加管理员/ btn-yellow 删除管理员 -->
+                <button type="button" class="btn btn-default btn-xs " v-else="">添加管理员</button>
+              </div>
+            </td>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- 页码 active表示选中 -->
+      <div style="text-align:center">
+        <ul class="pagination ">
+          <li><a href="#">&laquo;</a></li>
+          <li class="active"><a href="#">1</a></li>
+          <li><a href="#">2</a></li>
+          <li><a href="#">&raquo;</a></li>
+        </ul>
+      </div>
+      <!-- 用户添加弹出模拟框-->
+      <div class="modal fade" id="addSource" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                &times;
+              </button>
+              <h4 class="modal-title">添加用户</h4>
+            </div>
+            <div class="modal-body">
+              <div class="container-fluid">
+                <form class="form-horizontal">
+                  <div class="form-group ">
+                    <label for="aName" class="col-xs-3 control-label">姓名：</label>
+                    <div class="col-xs-8 ">
+                      <input type="text" class="form-control input-sm" id="aName" placeholder="">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="aLink" class="col-xs-3 control-label">职称：</label>
+                    <div class="col-xs-8 ">
+                      <textarea class="form-control input-sm" id="aLink" placeholder=""></textarea>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="aOrd" class="col-xs-3 control-label">简介：</label>
+                    <div class="col-xs-8">
+                      <textarea class="form-control input-sm" id="aOrd" placeholder=""></textarea>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="aKnot" class="col-xs-3 control-label">手机：</label>
+                    <div class="col-xs-8">
+                      <input type="text" class="form-control input-sm" id="aKnot" placeholder="">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-xs-3 control-label">管理员：</label>
+                    <div class="col-xs-8">
+                      <label class="control-label" for="aAnniu">
+                                                            <input type="radio" name="leixing" id="aAnniu">是</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      <label class="control-label" for="aMeun">
+                                                            <input type="radio" name="leixing" id="aMeun">否</label>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-xs btn-xs btn-default" data-dismiss="modal">取 消</button>
+              <button type="button" class="btn btn-xs btn-xs btn-success">保 存</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 查看弹出模拟框-->
+      <div class="modal fade" id="checkSource" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                &times;
+              </button>
+              <h4 class="modal-title">查看用户</h4>
+            </div>
+            <div class="modal-body">
+              <div class="container-fluid">
+                  <p>
+                    <div class="col-xs-2">
+                      <strong>姓名：</strong>
+                    </div>
+                    <div class="col-xs-10 " id="aName">
+                      yyqx
+                    </div>
+                  </p>
+                  <p>
+                    <div class="col-xs-2">
+                      <strong>职称：</strong>
+                    </div>
+                    <div class="col-xs-9 " id="aLink">
+                      sajkfgjakgfjkasgfkjasgfjkasgfjkagkfjasgjfkgasjkfgasjkf
+                    </div>
+                  </p>
+                  <p>
+                    <div class="col-xs-2">
+                      <strong>简介：</strong>
+                    </div>
+                    <div class="col-xs-9 " id="aOrd">
+                      sajkfgjakgfjkasgfkjasgfjkasgfjkagkfjasgjfkgasjkfgasjkf
+                    </div>
+                  </p>
+                  <p>
+                    <div class="col-xs-2">
+                      <strong>手机：</strong>
+                    </div>
+                    <div class="col-xs-9 " id="aKnot">
+                      sajkfgjakgfjkasgfkjasgfjkasgfjkagkfjasgjfkgasjkfgasjkf
+                    </div>
+                  </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--修改模拟弹出框-->
+      <div class="modal fade" id="changeSource" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true">&times;</button>
+              <h4 class="modal-title">修改资源</h4>
+            </div>
+            <div class="modal-body">
+              <div class="container-fluid">
+                <form class="form-horizontal">
+                  <div class="form-group ">
+                    <label for="tName" class="col-xs-3 control-label">姓名：</label>
+                    <div class="col-xs-8 ">
+                      <input type="email" class="form-control input-sm" id="tName" placeholder="">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="tLink" class="col-xs-3 control-label">职称：</label>
+                    <div class="col-xs-8 ">
+                      <textarea type="" class="form-control input-sm" id="tLink" placeholder=""></textarea>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="tOrd" class="col-xs-3 control-label">简介：</label>
+                    <div class="col-xs-8">
+                      <textarea type="" class="form-control input-sm" id="tOrd" placeholder=""></textarea>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="tKnot" class="col-xs-3 control-label">手机：</label>
+                    <div class="col-xs-8">
+                      <input type="" class="form-control input-sm" id="tKnot" placeholder="">
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
+              <button type="button" class="btn btn-xs btn-success">保 存</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--删除弹出模拟框-->
+      <div class="modal fade" id="deleteSource" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true>">&times;</button>
+              <h4 class="modal-title" id="gridSystemModalLabel">提示</h4>
+            </div>
+            <div class="modal-body">
+              <div class="container-fluid">
+                确定要删除该用户？删除后不可恢复！
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
+              <button type="button" class="btn btn-xs btn-danger">确定</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- php
+      <script>
+        var oUserTable = document.getElementById("userTable");
+        ajax('main.php?n=' + Math.random(), function(data) {
+          console.log(data);
+          oUserTable.innerHTML = data;
+        });
+      </script> -->
+    </div>
+
+    <!-- 监考信息 -->
+    <div role="tabpanel" class="tab-pane " id="invigilate">
+      <button type="button" name="button">nikan</button>
+    </div>
+  </div>
+</body>
+
+</html>
