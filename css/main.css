@@ -50,3 +50,10 @@
     color: #eab67c;
     border: 1px solid #eab67c;
 }
+
+#right .btn-while{
+    background: #fff;
+    margin-right: 10px;
+    color: #000;
+    border: 1px solid #DDDDDD;
+}

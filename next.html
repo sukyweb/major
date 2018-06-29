@@ -1,0 +1,245 @@
+methods: {
+  checkUser: function(a) {
+    axios.get('/api/user/a')
+      .then(function(response) {
+        if(response.code==0){
+          .then(function(data)){
+            this.checkName=response.data.userName;
+            this.checkProfessionTitle=response.data.professionTitle;
+            this.checkIntroduction=response.data.introduction;
+            this.checkPhone=response.data.phone;
+          }
+        }
+        else(response.code==1){
+          .then(function(response.msg)){
+            alert(response.msg);
+          }
+        }
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  },
+},
+
+<div role="tabpanel" class="tab-pane " id="invigilate">
+  <div class="head addBtn">
+    <button v-if="roleId==1" type="button" class=" btn btn-yellow bthAdd" data-toggle="modal" data-target="#addInvigilate">
+      添加监考信息
+    </button>
+  </div>
+  <table  id="invigilateTable" class="table table-striped">
+    <thead>
+      <tr>
+        <th class="hidden">id</th>
+        <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2 ">
+          起止时间
+        </th>
+        <th class="col-lg-3 col-md-3 col-sm-3 col-xs-3 ">
+          地点
+        </th>
+        <th class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+          课程名称
+        </th>
+        <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+          所需人数
+        </th>
+        <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+          操作
+        </th>
+      </tr>
+    </thead>
+    <tbody v-for="item in invigilate">
+      <tr>
+        <td class="hidden">{{item.userId}}</td>
+        <td>{{item.startTime}} - {{item.deadLine}}</td>
+        <td>{{item.location}}</td>
+        <td>{{item.courseName}}</td>
+        <td>{{item.needCount}}</td>
+        <td>
+          <button id="checkInvigilate" v-on:click=checkUser(item.user_id) type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#checkInvigilate">查看</button>
+          <div class="btn-group" v-if="roleId==1">
+            <button type="button" class="btn btn-xs "  v-bind:class="{hidden:item.status==2}">已分配</button>
+            <button type="button" class="btn btn-xs btn-while" v-bind:class="{hidden:item.status==1 }">分配</button>
+            <button type="button" class="btn btn-warning btn-xs " data-toggle="modal" data-target="#changeInvigilate">修改</button>
+            <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#deleteInvigilate">删除</button>
+          </div>
+        </td>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- 页码 active表示选中 -->
+  <div style="text-align:center">
+    <ul class="pagination ">
+      <li><a href="#">&laquo;</a></li>
+      <li class="active"><a href="#">1</a></li>
+      <li><a href="#">2</a></li>
+      <li><a href="#">&raquo;</a></li>
+    </ul>
+  </div>
+  <!-- 用户添加弹出模拟框-->
+  <div class="modal fade" id="addInvigilate" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            &times;
+          </button>
+          <h4 class="modal-title">添加监考信息</h4>
+        </div>
+        <div class="modal-body">
+          <div class="container-fluid">
+            <form class="form-horizontal">
+              <div class="form-group ">
+                <label for="cName" class="col-xs-3 control-label">起止时间：</label>
+                <div class="col-xs-8 ">
+                  <input type="date" class="form-control input-sm" id="cName" placeholder="开始时间">
+                  <input type="date" class="form-control input-sm" placeholder="结束时间">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="cLink" class="col-xs-3 control-label">地点：</label>
+                <div class="col-xs-8 ">
+                  <textarea class="form-control input-sm" id="cLink" placeholder=""></textarea>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="cOrd" class="col-xs-3 control-label">课程名称：</label>
+                <div class="col-xs-8">
+                  <textarea class="form-control input-sm" id="cOrd" placeholder=""></textarea>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="cKnot" class="col-xs-3 control-label">所需人数：</label>
+                <div class="col-xs-8">
+                  <input type="text" class="form-control input-sm" id="cKnot" placeholder="">
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-xs btn-xs btn-default" data-dismiss="modal">取 消</button>
+          <button type="button" class="btn btn-xs btn-xs btn-success" data-dismiss="modal">保 存</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 查看弹出模拟框-->
+  <div class="modal fade" id="checkInvigilate" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            &times;
+          </button>
+          <h4 class="modal-title">查看用户</h4>
+        </div>
+        <div class="modal-body">
+          <div class="container-fluid">
+              <p>
+                <div class="col-xs-2">
+                  <strong>起止时间：</strong>
+                </div>
+                <div class="col-xs-10 " id="aName">
+                   {{startTime}} - {{deadLine}}
+                </div>
+              </p>
+              <p>
+                <div class="col-xs-2">
+                  <strong>地点：</strong>
+                </div>
+                <div class="col-xs-9 " id="aLink">
+                  {{location}}
+                </div>
+              </p>
+              <p>
+                <div class="col-xs-2">
+                  <strong>课程名称：</strong>
+                </div>
+                <div class="col-xs-9 " id="aOrd">
+                  {{courseName}}
+                </div>
+              </p>
+              <p>
+                <div class="col-xs-2">
+                  <strong>所需人数：</strong>
+                </div>
+                <div class="col-xs-9 " id="aKnot">
+                  {{needCount}}
+                </div>
+              </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--修改模拟弹出框-->
+  <div class="modal fade" id="changeInvigilate" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">修改监考信息</h4>
+        </div>
+        <div class="modal-body">
+          <div class="container-fluid">
+            <form class="form-horizontal">
+              <div class="form-group ">
+                <label for="dName" class="col-xs-3 control-label">起止时间：</label>
+                <div class="col-xs-8 ">
+                  <input type="date" class="form-control input-sm" id="dName" placeholder="开始时间">
+                  <input type="date" class="form-control input-sm" placeholder="结束时间">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="dLink" class="col-xs-3 control-label">地点：</label>
+                <div class="col-xs-8 ">
+                  <textarea type="" class="form-control input-sm" id="dLink" placeholder=""></textarea>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="dOrd" class="col-xs-3 control-label">课程名称：</label>
+                <div class="col-xs-8">
+                  <textarea type="" class="form-control input-sm" id="dOrd" placeholder=""></textarea>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="dKnot" class="col-xs-3 control-label">所需人数：</label>
+                <div class="col-xs-8">
+                  <input type="" class="form-control input-sm" id="dKnot" placeholder="">
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
+          <button type="button" class="btn btn-xs btn-success"  data-dismiss="modal">保 存</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--删除弹出模拟框-->
+  <div class="modal fade" id="deleteInvigilate" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true>">&times;</button>
+          <h4 class="modal-title" id="gridSystemModalLabel">提示</h4>
+        </div>
+        <div class="modal-body">
+          <div class="container-fluid">
+            确定要删除该监考信息？删除后不可恢复！
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
+          <button type="button" class="btn btn-xs btn-danger" data-dismiss="modal">确定</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
