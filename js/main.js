@@ -29,15 +29,16 @@ window.onload = function() {
     },
     methods: {
       checkUser: function(a) {
+        var that=this;
         axios.get('/api/user/a')
           .then(function(response) {
-            if (response.code == 0) {
-              this.userName = response.data.userName;
-              this.professionTitle = response.data.professionTitle;
-              this.introduction=response.data.introduction;
-              this.phone=response.data.phone;
+            if (response.data.code == 0) {
+              that.userName = response.data.data.userName;
+              that.professionTitle = response.data.data.professionTitle;
+              that.introduction=response.data.data.introduction;
+              that.phone=response.data.data.phone;
             } else {
-              alert(response.msg)
+              alert(response.data.msg)
             }
           })
           .catch(function(error) {

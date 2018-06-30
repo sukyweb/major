@@ -11,8 +11,9 @@
   <script src="js/jquery-3.3.1.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/ajax1.js"></script>
-  <script src="js/vue.js"></script>
-  <script src="js/axios.js"></script>
+  <script src="js/vue.min.js"></script>
+  <script src="js/axios.min.js"></script>
+  <script src="js/vue-axios.min.js"></script>
   <script src="js/main.js"></script>
   <script>
 
@@ -85,7 +86,7 @@
     <!-- 教师信息 -->
     <div role="tabpanel" class="tab-pane active" id="teachers">
       <div class="head addBtn">
-        <button v-if="roleId==1" type="button" class=" btn btn-yellow bthAdd" data-toggle="modal" data-target="#addSource">
+        <button v-if="roleId==1" type="button" class=" btn btn-yellow bthAdd" data-toggle="modal" data-target="#addTeachers">
           添加用户
         </button>
       </div>
@@ -118,10 +119,10 @@
             <td>{{item.introduction}}</td>
             <td>{{item.phone}}</td>
             <td>
-              <button id="checkUser" v-on:click=checkUser(item.user_id) type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#checkSource">查看</button>
+              <button v-on:click=checkUser(item.user_id) type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#checkTeachers">查看</button>
               <div class="btn-group" v-if="roleId==1">
-                <button type="button" class="btn btn-warning btn-xs " data-toggle="modal" data-target="#changeSource">修改</button>
-                <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#deleteSource">删除</button>
+                <button type="button" class="btn btn-warning btn-xs " data-toggle="modal" data-target="#changeTeachers">修改</button>
+                <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#deleteTeachers">删除</button>
                 <button type="button" class="btn btn-xs "  v-bind:class="{hidden:item.roleId==2}">删除管理员</button>
                 <button type="button" class="btn btn-xs btn-while" v-bind:class="{hidden:item.roleId==1 }">添加管理员</button>
               </div>
@@ -140,7 +141,7 @@
         </ul>
       </div>
       <!-- 用户添加弹出模拟框-->
-      <div class="modal fade" id="addSource" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" aria-hidden="true">
+      <div class="modal fade" id="addTeachers" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -151,38 +152,38 @@
             </div>
             <div class="modal-body">
               <div class="container-fluid">
-                <form class="form-horizontal" >
+                <form class="form-horizontal" action="/api/user" method="post">
                   <div class="form-group ">
                     <label for="aName" class="col-xs-3 control-label">姓名：</label>
                     <div class="col-xs-8 ">
-                      <input type="text" class="form-control input-sm" id="aName" placeholder="">
+                      <input type="text" class="form-control input-sm" id="aName" name="userName">
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="aLink" class="col-xs-3 control-label">职称：</label>
                     <div class="col-xs-8 ">
-                      <textarea class="form-control input-sm" id="aLink" placeholder=""></textarea>
+                      <textarea class="form-control input-sm" id="aLink" name="professionTitle"></textarea>
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="aOrd" class="col-xs-3 control-label">简介：</label>
                     <div class="col-xs-8">
-                      <textarea class="form-control input-sm" id="aOrd" placeholder=""></textarea>
+                      <textarea class="form-control input-sm" id="aOrd" name="introduction"></textarea>
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="aKnot" class="col-xs-3 control-label">手机：</label>
                     <div class="col-xs-8">
-                      <input type="text" class="form-control input-sm" id="aKnot" placeholder="">
+                      <input type="text" class="form-control input-sm" id="aKnot" name="phone">
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-xs-3 control-label">管理员：</label>
                     <div class="col-xs-8">
                       <label class="control-label" for="aAnniu">
-                                                            <input type="radio" name="leixing" id="aAnniu">是</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                            <input type="radio" name="leixing" id="aAnniu" value="1">是</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       <label class="control-label" for="aMeun">
-                                                            <input type="radio" name="leixing" id="aMeun">否</label>
+                                                            <input type="radio" name="leixing" id="aMeun" value="2">否</label>
                     </div>
                   </div>
                 </form>
@@ -190,13 +191,13 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-xs btn-xs btn-default" data-dismiss="modal">取 消</button>
-              <button type="button" class="btn btn-xs btn-xs btn-success" data-dismiss="modal">保 存</button>
+              <input type="submit" value="保存"  class="btn btn-xs btn-xs btn-success"  data-dismiss="modal">
             </div>
           </div>
         </div>
       </div>
       <!-- 查看弹出模拟框-->
-      <div class="modal fade" id="checkSource" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" aria-hidden="true">
+      <div class="modal fade" id="checkTeachers" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -245,7 +246,7 @@
         </div>
       </div>
       <!--修改模拟弹出框-->
-      <div class="modal fade" id="changeSource" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" aria-hidden="true">
+      <div class="modal fade" id="changeTeachers" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -254,29 +255,29 @@
             </div>
             <div class="modal-body">
               <div class="container-fluid">
-                <form class="form-horizontal">
+                <form class="form-horizontal" action="/api/user" method="post">
                   <div class="form-group ">
                     <label for="tName" class="col-xs-3 control-label">姓名：</label>
                     <div class="col-xs-8 ">
-                      <input type="email" class="form-control input-sm" id="tName" placeholder="">
+                      <input type="text" class="form-control input-sm" id="tName" name="userName">
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="tLink" class="col-xs-3 control-label">职称：</label>
                     <div class="col-xs-8 ">
-                      <textarea type="" class="form-control input-sm" id="tLink" placeholder=""></textarea>
+                      <textarea class="form-control input-sm" id="tLink" name="professionTitle"></textarea>
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="tOrd" class="col-xs-3 control-label">简介：</label>
                     <div class="col-xs-8">
-                      <textarea type="" class="form-control input-sm" id="tOrd" placeholder=""></textarea>
+                      <textarea class="form-control input-sm" id="tOrd" name="introduction"></textarea>
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="tKnot" class="col-xs-3 control-label">手机：</label>
                     <div class="col-xs-8">
-                      <input type="" class="form-control input-sm" id="tKnot" placeholder="">
+                      <input type="number" class="form-control input-sm" id="tKnot" name="phone">
                     </div>
                   </div>
                 </form>
@@ -284,13 +285,13 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
-              <button type="button" class="btn btn-xs btn-success">保 存</button>
+              <input type="submit" value="保存"  class="btn btn-xs btn-xs btn-success"  data-dismiss="modal">
             </div>
           </div>
         </div>
       </div>
       <!--删除弹出模拟框-->
-      <div class="modal fade" id="deleteSource" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" aria-hidden="true">
+      <div class="modal fade" id="deleteTeachers" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -304,7 +305,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
-              <button type="button" class="btn btn-xs btn-danger">确定</button>
+              <button type="button" class="btn btn-xs btn-danger" data-dismiss="modal">确定</button>
             </div>
           </div>
         </div>
@@ -355,7 +356,7 @@
             <td>{{item.courseName}}</td>
             <td>{{item.needCount}}</td>
             <td>
-              <button id="checkInvigilate" v-on:click=checkUser(item.user_id) type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#checkInvigilate">查看</button>
+              <button v-on:click=checkUser(item.user_id) type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#checkInvigilate">查看</button>
               <div class="btn-group" v-if="roleId==1">
                 <button type="button" class="btn btn-xs "  v-bind:class="{hidden:item.status==2}">已分配</button>
                 <button type="button" class="btn btn-xs btn-while" v-bind:class="{hidden:item.status==1 }">分配</button>
@@ -376,7 +377,7 @@
           <li><a href="#">&raquo;</a></li>
         </ul>
       </div>
-      <!-- 用户添加弹出模拟框-->
+      <!-- 监考信息添加弹出模拟框-->
       <div class="modal fade" id="addInvigilate" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -390,28 +391,33 @@
               <div class="container-fluid">
                 <form class="form-horizontal">
                   <div class="form-group ">
-                    <label for="cName" class="col-xs-3 control-label">起止时间：</label>
+                    <label class="col-xs-3 control-label">起止时间：</label>
                     <div class="col-xs-8 ">
-                      <input type="date" class="form-control input-sm" id="cName" placeholder="开始时间">
-                      <input type="date" class="form-control input-sm" placeholder="结束时间">
+                      <input type="date" class="form-control input-sm"  name="">
+                    </div>
+                  </div>
+                  <div class="form-group ">
+                    <label class="col-xs-3 control-label">结束时间：</label>
+                    <div class="col-xs-8 ">
+                      <input type="date" class="form-control input-sm"  name="">
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="cLink" class="col-xs-3 control-label">地点：</label>
                     <div class="col-xs-8 ">
-                      <textarea class="form-control input-sm" id="cLink" placeholder=""></textarea>
+                      <input class="form-control input-sm" id="cLink" name="">
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="cOrd" class="col-xs-3 control-label">课程名称：</label>
                     <div class="col-xs-8">
-                      <textarea class="form-control input-sm" id="cOrd" placeholder=""></textarea>
+                      <input class="form-control input-sm" id="cOrd" name="">
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="cKnot" class="col-xs-3 control-label">所需人数：</label>
                     <div class="col-xs-8">
-                      <input type="text" class="form-control input-sm" id="cKnot" placeholder="">
+                      <input type="text" class="form-control input-sm" id="cKnot" name="">
                     </div>
                   </div>
                 </form>
@@ -419,7 +425,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-xs btn-xs btn-default" data-dismiss="modal">取 消</button>
-              <button type="button" class="btn btn-xs btn-xs btn-success" data-dismiss="modal">保 存</button>
+              <input type="submit" value="保存"  class="btn btn-xs btn-xs btn-success"  data-dismiss="modal">
             </div>
           </div>
         </div>
@@ -487,26 +493,26 @@
                   <div class="form-group ">
                     <label for="dName" class="col-xs-3 control-label">起止时间：</label>
                     <div class="col-xs-8 ">
-                      <input type="date" class="form-control input-sm" id="dName" placeholder="开始时间">
-                      <input type="date" class="form-control input-sm" placeholder="结束时间">
+                      <input type="date" class="form-control input-sm" id="dName" name="开始时间">
+                      <input type="date" class="form-control input-sm" name="结束时间">
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="dLink" class="col-xs-3 control-label">地点：</label>
                     <div class="col-xs-8 ">
-                      <textarea type="" class="form-control input-sm" id="dLink" placeholder=""></textarea>
+                      <textarea type="" class="form-control input-sm" id="dLink" name=""></textarea>
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="dOrd" class="col-xs-3 control-label">课程名称：</label>
                     <div class="col-xs-8">
-                      <textarea type="" class="form-control input-sm" id="dOrd" placeholder=""></textarea>
+                      <textarea type="" class="form-control input-sm" id="dOrd" name=""></textarea>
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="dKnot" class="col-xs-3 control-label">所需人数：</label>
                     <div class="col-xs-8">
-                      <input type="" class="form-control input-sm" id="dKnot" placeholder="">
+                      <input type="" class="form-control input-sm" id="dKnot" name="">
                     </div>
                   </div>
                 </form>
