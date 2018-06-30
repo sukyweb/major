@@ -98,10 +98,10 @@ window.onload = function() {
             console.log(error);
           });
        },
-      // checkTeachers: function() {
-      //   console.log("123")
-      //   // this.checkTeachers=b;
-      // },
+      checkTeachers: function() {
+        console.log("123")
+        this.checkTeachers=b;
+      },
       // deleteTeachers: function() {
       //   var that = this;
       //   axios.get('/api/user/b')

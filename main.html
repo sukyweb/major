@@ -164,9 +164,9 @@
             <td>{{item.introduction}}</td>
             <td>{{item.phone}}</td>
             <td>
-              <button v-on:click="checkUser(item.user_id)" type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#checkTeachers">查看</button>
+              <button v-on:click=checkUser(item.user_id) type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#checkTeachers">查看</button>
               <div class="btn-group" v-if="role_id==1">
-                <button v-on:click="checkTeachers(item.userName)" type="button" class="btn btn-warning btn-xs " data-toggle="modal" data-target="#changeTeachers" >修改</button>
+                <button v-on:click=checkTeachers(item.userName) type="button" class="btn btn-warning btn-xs " data-toggle="modal" data-target="#changeTeachers" >修改</button>
                 <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#deleteTeachers">删除</button>
                 <button type="button" class="btn btn-xs "  v-bind:class="{hidden:item.role_id==2}"  data-toggle="modal" data-target="#deleteRole" v-on:click="role()">删除管理员</button>
                 <button type="button" class="btn btn-xs btn-while" v-bind:class="{hidden:item.role_id==1 }"  data-toggle="modal" data-target="#addRole" v-on:click="role()">添加管理员</button>
