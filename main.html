@@ -132,7 +132,7 @@
     <div role="tabpanel" class="tab-pane active" id="teachers">
       <div class="head addBtn">
         <button v-if="role_id==1" type="button" class=" btn btn-yellow bthAdd" data-toggle="modal" data-target="#addTeachers">
-          添加用户
+          添加教师信息
         </button>
       </div>
       <table  id="userTable" class="table table-striped">
@@ -168,8 +168,8 @@
               <div class="btn-group" v-if="role_id==1">
                 <button type="button" class="btn btn-warning btn-xs " data-toggle="modal" data-target="#changeTeachers">修改</button>
                 <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#deleteTeachers">删除</button>
-                <button type="button" class="btn btn-xs "  v-bind:class="{hidden:item.role_id==2}" v-on:click=deleteUser(item.user_id)>删除管理员</button>
-                <button type="button" class="btn btn-xs btn-while" v-bind:class="{hidden:item.role_id==1 }" v-on:click=deleteUser(item.user_id)>添加管理员</button>
+                <button type="button" class="btn btn-xs "  v-bind:class="{hidden:item.role_id==2}"  data-toggle="modal" data-target="#deleteRole" v-on:click=role()>删除管理员</button>
+                <button type="button" class="btn btn-xs btn-while" v-bind:class="{hidden:item.role_id==1 }"  data-toggle="modal" data-target="#addRole" v-on:click=role()>添加管理员</button>
               </div>
             </td>
             </td>
@@ -193,7 +193,7 @@
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                 &times;
               </button>
-              <h4 class="modal-title">添加用户</h4>
+              <h4 class="modal-title">添加教师信息</h4>
             </div>
             <div class="modal-body">
               <div class="container-fluid">
@@ -249,7 +249,7 @@
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                 &times;
               </button>
-              <h4 class="modal-title">查看用户</h4>
+              <h4 class="modal-title">查看教师信息</h4>
             </div>
             <div class="modal-body">
               <div class="container-fluid">
@@ -296,7 +296,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true">&times;</button>
-              <h4 class="modal-title">修改资源</h4>
+              <h4 class="modal-title">修改教师信息</h4>
             </div>
             <div class="modal-body">
               <div class="container-fluid">
@@ -335,7 +335,7 @@
           </div>
         </div>
       </div>
-      <!--删除弹出模拟框-->
+      <!--删除教师信息弹出模拟框-->
       <div class="modal fade" id="deleteTeachers" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -345,12 +345,52 @@
             </div>
             <div class="modal-body">
               <div class="container-fluid">
-                确定要删除该用户？删除后不可恢复！
+                确定要删除该教师信息？删除后不可恢复！
               </div>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
-              <button type="button" class="btn btn-xs btn-danger" data-dismiss="modal">确定</button>
+              <button type="button" class="btn btn-xs btn-danger" data-dismiss="modal" v-on:click=deleteTeachers()>确定</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--删除管理员弹出模拟框-->
+      <div class="modal fade" id="deleteRole" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true>">&times;</button>
+              <h4 class="modal-title" id="gridSystemModalLabel">提示</h4>
+            </div>
+            <div class="modal-body">
+              <div class="container-fluid">
+                确定要删除该管理员？删除后不可恢复！
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
+              <button type="button" class="btn btn-xs btn-danger" data-dismiss="modal" v-on:click=role()>确定</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--添加管理员弹出模拟框-->
+      <div class="modal fade" id="addRole" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true>">&times;</button>
+              <h4 class="modal-title" id="gridSystemModalLabel">提示</h4>
+            </div>
+            <div class="modal-body">
+              <div class="container-fluid">
+                确定要添加该管理员？
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
+              <button type="button" class="btn btn-xs btn-danger" data-dismiss="modal" v-on:click=role()>确定</button>
             </div>
           </div>
         </div>

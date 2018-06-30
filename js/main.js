@@ -10,26 +10,26 @@ window.onload = function() {
         phone: '44',
       },
     },
-    computed: {
-      userMsg: function() {
-        var that = this;
-        axios.get('/api/user/id')
-          .then(function(response) {
-            if (response.data.code == 0) {
-              that.role_id = response.data.data.role_id;
-              that.user.userName = response.data.data.userName;
-              that.user.professionTitle = response.data.data.professionTitle;
-              that.user.introduction = response.data.data.introduction;
-              that.user.phone = response.data.data.phone;
-            } else {
-              alert(response.data.msg)
-            }
-          })
-          .catch(function(error) {
-            console.log(error);
-          });
-      }
-    },
+    // computed: {
+    //   userMsg: function() {
+    //     var that = this;
+    //     axios.get('/api/user/id')
+    //       .then(function(response) {
+    //         if (response.data.code == 0) {
+    //           that.role_id = response.data.data.role_id;
+    //           that.user.userName = response.data.data.userName;
+    //           that.user.professionTitle = response.data.data.professionTitle;
+    //           that.user.introduction = response.data.data.introduction;
+    //           that.user.phone = response.data.data.phone;
+    //         } else {
+    //           alert(response.data.msg)
+    //         }
+    //       })
+    //       .catch(function(error) {
+    //         console.log(error);
+    //       });
+    //   }
+    // },
   });
   var right = new Vue({
     el: "#teachers",
@@ -59,7 +59,7 @@ window.onload = function() {
     computed: {
       teachersMsg: function() {
         var that = this;
-        axios.get('/api/user')
+        axios.get('/api/allUser')
           .then(function(response) {
             if (response.data.code == 0) {
               for (var i = 0; i < response.data.teachers.leight; i++) {
@@ -89,6 +89,36 @@ window.onload = function() {
               that.professionTitle = response.data.data.professionTitle;
               that.introduction = response.data.data.introduction;
               that.phone = response.data.data.phone;
+            } else {
+              alert(response.data.msg)
+            }
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
+      },
+      deleteTeachers: function() {
+        var that = this;
+        axios.get('/api/user/b')
+          .then(function(response) {
+            if (response.data.code == 0) {
+              alert(response.data.msg);
+              teachersMsg();
+            } else {
+              alert(response.data.msg)
+            }
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
+      },
+      role: function() {
+        var that = this;
+        axios.get('/api/user/b')
+          .then(function(response) {
+            if (response.data.code == 0) {
+              alert(response.data.msg);
+              teachersMsg();
             } else {
               alert(response.data.msg)
             }
