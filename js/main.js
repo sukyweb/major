@@ -39,6 +39,7 @@ window.onload = function() {
       professionTitle: '',
       introduction: '',
       phone: '',
+      checkTeachers:{},
       teachers: [{
           user_id: 1,
           userName: 'yyqx',
@@ -56,29 +57,29 @@ window.onload = function() {
         },
       ]
     },
-    computed: {
-      teachersMsg: function() {
-        var that = this;
-        axios.get('/api/allUser')
-          .then(function(response) {
-            if (response.data.code == 0) {
-              for (var i = 0; i < response.data.teachers.leight; i++) {
-                that.teachers[i].user_id = response.data.teachers.user_id;
-                that.teachers[i].userName = response.data.teachers.userName;
-                that.teachers[i].professionTitle = response.data.teachers.professionTitle;
-                that.teachers[i].introduction = response.data.teachers.introduction;
-                that.teachers[i].phone = response.data.teachers.phone;
-                that.teachers[i].role_id = response.data.teachers.role_id;
-              }
-            } else {
-              alert(response.data.msg)
-            }
-          })
-          .catch(function(error) {
-            console.log(error);
-          });
-      },
-    },
+    // computed: {
+    //   teachersMsg: function() {
+    //     var that = this;
+    //     axios.get('/api/allUser')
+    //       .then(function(response) {
+    //         if (response.data.code == 0) {
+    //           for (var i = 0; i < response.data.teachers.leight; i++) {
+    //             that.teachers[i].user_id = response.data.teachers.user_id;
+    //             that.teachers[i].userName = response.data.teachers.userName;
+    //             that.teachers[i].professionTitle = response.data.teachers.professionTitle;
+    //             that.teachers[i].introduction = response.data.teachers.introduction;
+    //             that.teachers[i].phone = response.data.teachers.phone;
+    //             that.teachers[i].role_id = response.data.teachers.role_id;
+    //           }
+    //         } else {
+    //           alert(response.data.msg)
+    //         }
+    //       })
+    //       .catch(function(error) {
+    //         console.log(error);
+    //       });
+    //   },
+    // },
     methods: {
       checkUser: function(a) {
         var that = this;
@@ -96,37 +97,41 @@ window.onload = function() {
           .catch(function(error) {
             console.log(error);
           });
-      },
-      deleteTeachers: function() {
-        var that = this;
-        axios.get('/api/user/b')
-          .then(function(response) {
-            if (response.data.code == 0) {
-              alert(response.data.msg);
-              teachersMsg();
-            } else {
-              alert(response.data.msg)
-            }
-          })
-          .catch(function(error) {
-            console.log(error);
-          });
-      },
-      role: function() {
-        var that = this;
-        axios.get('/api/user/b')
-          .then(function(response) {
-            if (response.data.code == 0) {
-              alert(response.data.msg);
-              teachersMsg();
-            } else {
-              alert(response.data.msg)
-            }
-          })
-          .catch(function(error) {
-            console.log(error);
-          });
-      },
+       },
+      // checkTeachers: function() {
+      //   console.log("123")
+      //   // this.checkTeachers=b;
+      // },
+      // deleteTeachers: function() {
+      //   var that = this;
+      //   axios.get('/api/user/b')
+      //     .then(function(response) {
+      //       if (response.data.code == 0) {
+      //         alert(response.data.msg);
+      //         teachersMsg();
+      //       } else {
+      //         alert(response.data.msg)
+      //       }
+      //     })
+      //     .catch(function(error) {
+      //       console.log(error);
+      //     });
+      // },
+      // role: function() {
+      //   var that = this;
+      //   axios.get('/api/user/b')
+      //     .then(function(response) {
+      //       if (response.data.code == 0) {
+      //         alert(response.data.msg);
+      //         teachersMsg();
+      //       } else {
+      //         alert(response.data.msg)
+      //       }
+      //     })
+      //     .catch(function(error) {
+      //       console.log(error);
+      //     });
+      // },
     },
   });
 

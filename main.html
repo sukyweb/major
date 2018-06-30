@@ -78,13 +78,13 @@
                 <div class="form-group">
                   <label for="eLink" class="col-xs-3 control-label">职称：</label>
                   <div class="col-xs-8 ">
-                    <textarea class="form-control input-sm" id="eLink" name="professionTitle"v-model="user.professionTitle"></textarea>
+                    <textarea class="form-control input-sm" id="eLink" name="professionTitle" v-model="user.professionTitle"></textarea>
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="eOrd" class="col-xs-3 control-label">简介：</label>
                   <div class="col-xs-8">
-                    <textarea class="form-control input-sm" id="eOrd" name="introduction"v-model="user.introduction"></textarea>
+                    <textarea class="form-control input-sm" id="eOrd" name="introduction" v-model="user.introduction"></textarea>
                   </div>
                 </div>
                 <div class="form-group">
@@ -164,12 +164,12 @@
             <td>{{item.introduction}}</td>
             <td>{{item.phone}}</td>
             <td>
-              <button v-on:click=checkUser(item.user_id) type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#checkTeachers">查看</button>
+              <button v-on:click="checkUser(item.user_id)" type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#checkTeachers">查看</button>
               <div class="btn-group" v-if="role_id==1">
-                <button type="button" class="btn btn-warning btn-xs " data-toggle="modal" data-target="#changeTeachers">修改</button>
+                <button v-on:click="checkTeachers(item.userName)" type="button" class="btn btn-warning btn-xs " data-toggle="modal" data-target="#changeTeachers" >修改</button>
                 <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#deleteTeachers">删除</button>
-                <button type="button" class="btn btn-xs "  v-bind:class="{hidden:item.role_id==2}"  data-toggle="modal" data-target="#deleteRole" v-on:click=role()>删除管理员</button>
-                <button type="button" class="btn btn-xs btn-while" v-bind:class="{hidden:item.role_id==1 }"  data-toggle="modal" data-target="#addRole" v-on:click=role()>添加管理员</button>
+                <button type="button" class="btn btn-xs "  v-bind:class="{hidden:item.role_id==2}"  data-toggle="modal" data-target="#deleteRole" v-on:click="role()">删除管理员</button>
+                <button type="button" class="btn btn-xs btn-while" v-bind:class="{hidden:item.role_id==1 }"  data-toggle="modal" data-target="#addRole" v-on:click="role()">添加管理员</button>
               </div>
             </td>
             </td>
@@ -257,7 +257,7 @@
                     <div class="col-xs-2">
                       <strong>姓名：</strong>
                     </div>
-                    <div class="col-xs-10 " id="aName">
+                    <div class="col-xs-10 ">
                        {{userName}}
                     </div>
                   </p>
@@ -265,7 +265,7 @@
                     <div class="col-xs-2">
                       <strong>职称：</strong>
                     </div>
-                    <div class="col-xs-9 " id="aLink">
+                    <div class="col-xs-9 ">
                       {{professionTitle}}
                     </div>
                   </p>
@@ -273,7 +273,7 @@
                     <div class="col-xs-2">
                       <strong>简介：</strong>
                     </div>
-                    <div class="col-xs-9 " id="aOrd">
+                    <div class="col-xs-9 ">
                       {{introduction}}
                     </div>
                   </p>
@@ -281,7 +281,7 @@
                     <div class="col-xs-2">
                       <strong>手机：</strong>
                     </div>
-                    <div class="col-xs-9 " id="aKnot">
+                    <div class="col-xs-9 ">
                       {{phone}}
                     </div>
                   </p>
@@ -341,7 +341,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true>">&times;</button>
-              <h4 class="modal-title" id="gridSystemModalLabel">提示</h4>
+              <h4 class="modal-title">提示</h4>
             </div>
             <div class="modal-body">
               <div class="container-fluid">
@@ -361,7 +361,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true>">&times;</button>
-              <h4 class="modal-title" id="gridSystemModalLabel">提示</h4>
+              <h4 class="modal-title">提示</h4>
             </div>
             <div class="modal-body">
               <div class="container-fluid">
@@ -381,7 +381,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true>">&times;</button>
-              <h4 class="modal-title" id="gridSystemModalLabel">提示</h4>
+              <h4 class="modal-title">提示</h4>
             </div>
             <div class="modal-body">
               <div class="container-fluid">
@@ -473,35 +473,35 @@
             </div>
             <div class="modal-body">
               <div class="container-fluid">
-                <form class="form-horizontal">
+                <form class="form-horizontal" action="/api/invigilate/" method="post">
                   <div class="form-group ">
-                    <label class="col-xs-3 control-label">起止时间：</label>
+                    <label for="cSTime" class="col-xs-3 control-label">起止时间：</label>
                     <div class="col-xs-8 ">
-                      <input type="date" class="form-control input-sm"  name="">
+                      <input type="date" class="form-control input-sm" id="cSTime" name="startTime">
                     </div>
                   </div>
                   <div class="form-group ">
-                    <label class="col-xs-3 control-label">结束时间：</label>
+                    <label for="cETime"class="col-xs-3 control-label">结束时间：</label>
                     <div class="col-xs-8 ">
-                      <input type="date" class="form-control input-sm"  name="">
+                      <input type="date" class="form-control input-sm" id="cETime" name="deadLine">
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="cLink" class="col-xs-3 control-label">地点：</label>
                     <div class="col-xs-8 ">
-                      <input class="form-control input-sm" id="cLink" name="">
+                      <input type="text" class="form-control input-sm" id="cLink" name="location">
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="cOrd" class="col-xs-3 control-label">课程名称：</label>
                     <div class="col-xs-8">
-                      <input class="form-control input-sm" id="cOrd" name="">
+                      <input type="text" class="form-control input-sm" id="cOrd" name="courseName">
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="cKnot" class="col-xs-3 control-label">所需人数：</label>
                     <div class="col-xs-8">
-                      <input type="text" class="form-control input-sm" id="cKnot" name="">
+                      <input type="text" class="form-control input-sm" id="cKnot" name="needCount">
                     </div>
                   </div>
                 </form>
@@ -530,7 +530,7 @@
                     <div class="col-xs-2">
                       <strong>起止时间：</strong>
                     </div>
-                    <div class="col-xs-10 " id="aName">
+                    <div class="col-xs-10 ">
                        {{startTime}} - {{deadLine}}
                     </div>
                   </p>
@@ -538,7 +538,7 @@
                     <div class="col-xs-2">
                       <strong>地点：</strong>
                     </div>
-                    <div class="col-xs-9 " id="aLink">
+                    <div class="col-xs-9 ">
                       {{location}}
                     </div>
                   </p>
@@ -546,7 +546,7 @@
                     <div class="col-xs-2">
                       <strong>课程名称：</strong>
                     </div>
-                    <div class="col-xs-9 " id="aOrd">
+                    <div class="col-xs-9 ">
                       {{courseName}}
                     </div>
                   </p>
@@ -554,7 +554,7 @@
                     <div class="col-xs-2">
                       <strong>所需人数：</strong>
                     </div>
-                    <div class="col-xs-9 " id="aKnot">
+                    <div class="col-xs-9 ">
                       {{needCount}}
                     </div>
                   </p>
@@ -573,30 +573,35 @@
             </div>
             <div class="modal-body">
               <div class="container-fluid">
-                <form class="form-horizontal">
+                <form class="form-horizontal" action="/api/invigilate/" method="post">
                   <div class="form-group ">
-                    <label for="dName" class="col-xs-3 control-label">起止时间：</label>
+                    <label for="dSTime" class="col-xs-3 control-label">起止时间：</label>
                     <div class="col-xs-8 ">
-                      <input type="date" class="form-control input-sm" id="dName" name="开始时间">
-                      <input type="date" class="form-control input-sm" name="结束时间">
+                      <input type="date" class="form-control input-sm" id="dSTime" name="startTime">
+                    </div>
+                  </div>
+                  <div class="form-group ">
+                    <label for="dETime"class="col-xs-3 control-label">结束时间：</label>
+                    <div class="col-xs-8 ">
+                      <input type="date" class="form-control input-sm" id="dETime" name="deadLine">
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="dLink" class="col-xs-3 control-label">地点：</label>
                     <div class="col-xs-8 ">
-                      <textarea type="" class="form-control input-sm" id="dLink" name=""></textarea>
+                      <input type="text" class="form-control input-sm" id="dLink" name="location">
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="dOrd" class="col-xs-3 control-label">课程名称：</label>
                     <div class="col-xs-8">
-                      <textarea type="" class="form-control input-sm" id="dOrd" name=""></textarea>
+                      <input type="text" class="form-control input-sm" id="dOrd" name="courseName">
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="dKnot" class="col-xs-3 control-label">所需人数：</label>
                     <div class="col-xs-8">
-                      <input type="" class="form-control input-sm" id="dKnot" name="">
+                      <input type="text" class="form-control input-sm" id="dKnot" name="needCount">
                     </div>
                   </div>
                 </form>
@@ -604,7 +609,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
-              <button type="button" class="btn btn-xs btn-success"  data-dismiss="modal">保 存</button>
+              <input type="submit" class="btn btn-xs btn-success"  data-dismiss="modal" value="保 存">
             </div>
           </div>
         </div>
@@ -615,7 +620,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true>">&times;</button>
-              <h4 class="modal-title" id="gridSystemModalLabel">提示</h4>
+              <h4 class="modal-title">提示</h4>
             </div>
             <div class="modal-body">
               <div class="container-fluid">
